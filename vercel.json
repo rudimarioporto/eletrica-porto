@@ -1,6 +1,9 @@
 {
-  "routes": [
-    { "src": "/cartao", "dest": "/" },
-    { "src": "/(.*)", "dest": "/" }
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }
