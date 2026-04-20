@@ -9,23 +9,26 @@ const Contact = () => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (form.message.length > 500) return;
-    setLoading(true);
-    const body = new URLSearchParams({ name: form.name, phone: form.phone, email: form.email, message: form.message });
-    try {
-      await fetch('/api/send-email', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(form),
-});
-    } catch (err) { console.error(err); }
-    setLoading(false);
-    setSubmitted(true);
-  };
+ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+
+  if (form.message.length > 500) return;
+
+  setLoading(true);
+
+  try {
+    await fetch('/api/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form),
+    });
+  } catch (err) {
+    console.error(err);
+  }
+
+  setLoading(false);
+  setSubmitted(true);
+};
 
   const focusStyle = { borderColor: '#1E4E8C' };
   const blurStyle = { borderColor: '' };
