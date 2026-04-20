@@ -16,7 +16,7 @@ export async function POST(request: Request) {
 
     await resend.emails.send({
       from: 'contato@eletricaporto.com.br',
-      to: 'rudivanporto@hotmail.com',
+      to: ['rudivanporto@hotmail.com', 'eletricaportovenda@gmail.com'],
       reply_to: 'rudivanporto@hotmail.com',
       subject: 'Novo contato do site - Elétrica Porto',
       html: `
