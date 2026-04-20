@@ -112,7 +112,7 @@ const Contact = () => {
                 </button>
               </div>
             ) : (
-              <form data-readdy-form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              <form onSubmit={handleSubmit}> className="flex flex-col gap-4">
                 <h3 className="font-bold text-gray-900 text-base mb-1">Envie sua mensagem</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
