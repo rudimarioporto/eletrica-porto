@@ -13,7 +13,10 @@ export default async function handler(req, res) {
 
     const response = await resend.emails.send({
       from: 'onboarding@resend.dev',
-      to: 'SEUEMAIL@gmail.com', // 👉 troca pelo seu email
+      to: [
+  'rudivanporto@hotmail.com',
+  'eletricaportovendas@gmail.com'
+],
       subject: 'Novo agendamento - Site',
       html: `
         <h2>Novo agendamento</h2>
