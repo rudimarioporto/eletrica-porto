@@ -17,16 +17,28 @@ const Contact = () => {
   setLoading(true);
 
   try {
-    await fetch('/api/send-email', {
+    const res = await fetch('/api/send-email', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form),
     });
+
+    const data = await res.json();
+
+    console.log('Resposta da API:', data);
+
+    if (!res.ok) {
+      throw new Error('Erro ao enviar');
+    }
+
+    setSubmitted(true);
   } catch (err) {
-    console.error(err);
+    console.error('Erro real:', err);
+    alert('Erro ao enviar mensagem!');
   }
 
   setLoading(false);
+};
   setSubmitted(true);
 };
 
