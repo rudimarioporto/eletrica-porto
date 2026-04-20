@@ -1,47 +1,35 @@
 import { Resend } from 'resend';
 
-export async function POST(request: Request) {
-  const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+export default async function handler(req, res) {
+  // 🔒 Bloqueia qualquer coisa que não seja POST
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method Not Allowed' });
+  }
 
   try {
-    const { nome, telefone, mensagem } = await request.json();
+    const { name, email, phone, service, date, time } = req.body;
 
-    // validação simples (evita envio vazio)
-    if (!nome || !telefone || !mensagem) {
-      return new Response(
-        JSON.stringify({ error: 'Preencha todos os campos.' }),
-        { status: 400 }
-      );
-    }
-
-    await resend.emails.send({
-      from: 'contato@eletricaporto.com.br',
-      to: ['rudivanporto@hotmail.com', 'eletricaportovenda@gmail.com'],
-      reply_to: 'rudivanporto@hotmail.com',
-      subject: 'Novo contato do site - Elétrica Porto',
+    const response = await resend.emails.send({
+      from: 'onboarding@resend.dev',
+      to: 'SEUEMAIL@gmail.com', // 👉 troca pelo seu email
+      subject: 'Novo agendamento - Site',
       html: `
-        <div style="font-family: Arial, sans-serif;">
-          <h2>📩 Novo contato recebido</h2>
-          <p><strong>Nome:</strong> ${nome}</p>
-          <p><strong>Telefone:</strong> ${telefone}</p>
-          <p><strong>Mensagem:</strong></p>
-          <p>${mensagem}</p>
-          <hr/>
-          <p style="font-size: 12px; color: #666;">
-            Enviado pelo site eletricaporto.com.br
-          </p>
-        </div>
+        <h2>Novo agendamento</h2>
+        <p><strong>Nome:</strong> ${name}</p>
+        <p><strong>Telefone:</strong> ${phone}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Serviço:</strong> ${service}</p>
+        <p><strong>Data:</strong> ${date}</p>
+        <p><strong>Horário:</strong> ${time}</p>
       `,
     });
 
-    return new Response(JSON.stringify({ success: true }), {
-      status: 200,
-    });
+    return res.status(200).json({ success: true, response });
 
   } catch (error) {
-    return new Response(
-      JSON.stringify({ error: 'Erro ao enviar email' }),
-      { status: 500 }
-    );
+    console.error('ERRO:', error);
+    return res.status(500).json({ error: 'Erro ao enviar email' });
   }
 }
