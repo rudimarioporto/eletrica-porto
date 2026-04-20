@@ -15,11 +15,13 @@ const Contact = () => {
     setLoading(true);
     const body = new URLSearchParams({ name: form.name, phone: form.phone, email: form.email, message: form.message });
     try {
-      await fetch('https://readdy.ai/api/form/d7g30ifimhg6tri2vo8g', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: body.toString(),
-      });
+      await fetch('/api/send-email', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(form),
+});
     } catch (err) { console.error(err); }
     setLoading(false);
     setSubmitted(true);
