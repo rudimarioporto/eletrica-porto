@@ -17,22 +17,27 @@ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     const data = await res.json();
     console.log('API:', data);
 
-    // ✅ só continua se deu certo
     setSubmitted(true);
 
+    // 🔒 proteção contra campos inexistentes
+    const date = (form as any).date || '';
+    const time = (form as any).time || '';
+    const service = (form as any).service || '';
+
     const msg = encodeURIComponent(
-      `Olá, gostaria de confirmar meu agendamento na Elétrica Porto para ${form.date} às ${form.time}, serviço: ${form.service}. Meu nome é ${form.name}.`
+      `Olá, gostaria de confirmar meu agendamento na Elétrica Porto${service ? ` para ${service}` : ''}${date ? ` no dia ${date}` : ''}${time ? ` às ${time}` : ''}. Meu nome é ${form.name}.`
     );
 
     window.open(`https://wa.me/5573999933162?text=${msg}`, '_blank');
 
     setTimeout(() => {
       const params = new URLSearchParams({
-        name: form.name,
-        service: form.service,
-        date: form.date,
-        time: form.time,
+        name: form.name || '',
+        service: service,
+        date: date,
+        time: time,
       });
+
       navigate(`/agradecimento?${params.toString()}`);
     }, 600);
 
