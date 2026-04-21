@@ -30,13 +30,17 @@ const Contact = () => {
     if (!res.ok) {
       throw new Error('Erro ao enviar');
     }
+    
 setSubmitted(true);
+
+ setForm({ name: '', phone: '', email: '', message: '' });   
   } catch (err) {
     console.error('Erro real:', err);
     alert('Erro ao enviar mensagem!');
-  }
+  } finally {
 
   setLoading(false);
+}
 };
   
   const focusStyle = { borderColor: '#1E4E8C' };
