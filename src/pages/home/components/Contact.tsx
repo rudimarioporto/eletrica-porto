@@ -40,9 +40,7 @@ const Contact = () => {
 
   setLoading(false);
 };
-  setSubmitted(true);
-};
-
+  
   const focusStyle = { borderColor: '#1E4E8C' };
   const blurStyle = { borderColor: '' };
 
