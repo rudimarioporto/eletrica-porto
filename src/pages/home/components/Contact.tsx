@@ -31,8 +31,6 @@ const Contact = () => {
       throw new Error('Erro ao enviar');
     }
 
-    setSubmitted(true);
-
   } catch (err) {
     console.error('Erro real:', err);
     alert('Erro ao enviar mensagem!');
