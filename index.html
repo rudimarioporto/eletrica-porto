@@ -27,7 +27,7 @@
     <meta name="geo.position" content="-16.4497;-39.0647" />
     <meta name="ICBM" content="-16.4497, -39.0647" />
 
-    <!-- 🔥 ORGANIZATION (LOGO PARA O GOOGLE) -->
+    <!-- ORGANIZATION -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -38,7 +38,7 @@
     }
     </script>
 
-    <!-- 🔥 LOCAL BUSINESS (SEO LOCAL) -->
+    <!-- LOCAL BUSINESS -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -100,3 +100,13 @@
       }
     </style>
   </head>
+
+  <!-- 🚨 AQUI ESTAVA O PROBLEMA -->
+  <body>
+    <!-- ESSENCIAL PRO REACT -->
+    <div id="root"></div>
+
+    <!-- SCRIPT DO VITE / REACT -->
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
