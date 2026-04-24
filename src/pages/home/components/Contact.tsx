@@ -23,24 +23,32 @@ const Contact = () => {
       body: JSON.stringify(form),
     });
 
-    const data = await res.json();
-
-    console.log('Resposta da API:', data);
-
     if (!res.ok) {
       throw new Error('Erro ao enviar');
     }
-    
-setSubmitted(true);
 
- setForm({ name: '', phone: '', email: '', message: '' });   
+    const data = await res.json();
+    console.log('API:', data);
+
+    // sucesso
+    setSubmitted(true);
+
+    // mensagem para WhatsApp (usando campos que EXISTEM)
+    const msg = encodeURIComponent(
+      `Olá, meu nome é ${form.name}. Telefone: ${form.phone}. Mensagem: ${form.message}`
+    );
+
+    window.open(`https://wa.me/5573999933162?text=${msg}`, '_blank');
+
+    // limpa o formulário
+    setForm({ name: '', phone: '', email: '', message: '' });
+
   } catch (err) {
-    console.error('Erro real:', err);
-    alert('Erro ao enviar mensagem!');
+    console.error('Erro ao enviar email:', err);
+    alert('Erro ao enviar. Tente novamente.');
   } finally {
-
-  setLoading(false);
-}
+    setLoading(false);
+  }
 };
   
   const focusStyle = { borderColor: '#1E4E8C' };
