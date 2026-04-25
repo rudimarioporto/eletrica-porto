@@ -44,7 +44,7 @@ const Agendamento = () => {
           />
 
           <button
-            type="submit"
+            type="button"
             onClick={() => alert("clicou")}
             className="bg-[#38B6FF] text-white font-bold py-3 rounded-lg hover:opacity-90"
           >
