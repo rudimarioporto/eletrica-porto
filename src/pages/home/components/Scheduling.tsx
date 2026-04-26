@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 const Scheduling = () => {
   const [loading, setLoading] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
 
   const navigate = useNavigate();
 
@@ -14,63 +13,85 @@ const Scheduling = () => {
     time: "",
   });
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-    setLoading(true);
+  setLoading(true);
 
-    try {
-      const res = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
+  const msg = encodeURIComponent(
+    `Olá, gostaria de agendar um atendimento${
+      form.service ? ` para ${form.service}` : ""
+    }${form.date ? ` no dia ${form.date}` : ""}${
+      form.time ? ` às ${form.time}` : ""
+    }. Meu nome é ${form.name}.`
+  );
 
-      if (!res.ok) {
-        throw new Error('Erro ao enviar');
-      }
+  // abre WhatsApp
+  window.open(`https://wa.me/5573999933162?text=${msg}`, "_blank");
 
-      const data = await res.json();
-      console.log('API:', data);
+  // redireciona
+  const params = new URLSearchParams({
+    name: form.name || "",
+    service: form.service || "",
+    date: form.date || "",
+    time: form.time || "",
+  });
 
-      setSubmitted(true);
+  navigate(`/agradecimento?${params.toString()}`);
 
-      // proteção contra campos inexistentes
-      const date = (form as any).date || '';
-      const time = (form as any).time || '';
-      const service = (form as any).service || '';
-
-      const msg = encodeURIComponent(
-        `Olá, gostaria de confirmar meu agendamento na Elétrica Porto${
-          service ? ` para ${service}` : ''
-        }${date ? ` no dia ${date}` : ''}${time ? ` às ${time}` : ''}. Meu nome é ${form.name}.`
-      );
-
-      window.open(`https://wa.me/5573999933162?text=${msg}`, '_blank');
-
-      setTimeout(() => {
-        const params = new URLSearchParams({
-          name: form.name || '',
-          service: service,
-          date: date,
-          time: time,
-        });
-
-        navigate(`/agradecimento?${params.toString()}`);
-      }, 600);
-
-    } catch (err) {
-      console.error('Erro ao enviar email:', err);
-      alert('Erro ao enviar. Tente novamente.');
-    } finally {
-      setLoading(false);
-    }
+  setLoading(false);
+};
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {/* seu formulário aqui */}
-    </form>
+    <section id="agendamento" className="p-10 bg-white text-center">
+      <h2 className="text-2xl font-bold mb-4">
+        Agendar Atendimento
+      </h2>
+
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-md mx-auto">
+
+        <input
+          type="text"
+          placeholder="Seu nome"
+          required
+          value={form.name}
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          className="border p-3 rounded"
+        />
+
+        <input
+          type="text"
+          placeholder="Serviço"
+          value={form.service}
+          onChange={(e) => setForm({ ...form, service: e.target.value })}
+          className="border p-3 rounded"
+        />
+
+        <input
+          type="date"
+          value={form.date}
+          onChange={(e) => setForm({ ...form, date: e.target.value })}
+          className="border p-3 rounded"
+        />
+
+        <input
+          type="time"
+          value={form.time}
+          onChange={(e) => setForm({ ...form, time: e.target.value })}
+          className="border p-3 rounded"
+        />
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="bg-blue-500 text-white p-3 rounded"
+        >
+          {loading ? "Enviando..." : "Enviar Solicitação"}
+        </button>
+
+      </form>
+    </section>
   );
 };
 

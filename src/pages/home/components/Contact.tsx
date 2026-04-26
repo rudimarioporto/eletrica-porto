@@ -9,7 +9,7 @@ const Contact = () => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
- const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+ const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
   e.preventDefault();
 
   if (form.message.length > 500) return;
@@ -17,34 +17,24 @@ const Contact = () => {
   setLoading(true);
 
   try {
-    const res = await fetch('/api/send-email', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form),
-    });
-
-    if (!res.ok) {
-      throw new Error('Erro ao enviar');
-    }
-
-    const data = await res.json();
-    console.log('API:', data);
-
-    // sucesso
-    setSubmitted(true);
-
-    // mensagem para WhatsApp (usando campos que EXISTEM)
     const msg = encodeURIComponent(
-      `Olá, meu nome é ${form.name}. Telefone: ${form.phone}. Mensagem: ${form.message}`
+      `Olá, meu nome é ${form.name}.
+Telefone: ${form.phone}
+Email: ${form.email}
+Mensagem: ${form.message}`
     );
 
+    // abre WhatsApp
     window.open(`https://wa.me/5573999933162?text=${msg}`, '_blank');
 
-    // limpa o formulário
+    // sucesso visual
+    setSubmitted(true);
+
+    // limpa formulário
     setForm({ name: '', phone: '', email: '', message: '' });
 
   } catch (err) {
-    console.error('Erro ao enviar email:', err);
+    console.error('Erro:', err);
     alert('Erro ao enviar. Tente novamente.');
   } finally {
     setLoading(false);
