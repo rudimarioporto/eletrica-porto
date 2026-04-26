@@ -1,17 +1,10 @@
 const Hero = () => {
-  const handleScroll = (id: string) => {
-    const el = document.getElementById(id.replace('#', ''));
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
-
   return (
     <section
       id="inicio"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background Image (LOCAL + otimizada) */}
+      {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
@@ -31,7 +24,7 @@ const Hero = () => {
       {/* Content */}
       <div className="relative z-10 w-full max-w-5xl mx-auto px-4 md:px-8 text-center">
 
-        {/* Logo menor */}
+        {/* Logo */}
         <div className="flex items-center justify-start mb-6 mt-12">
           <img
             src="/images/logo.png"
@@ -50,7 +43,7 @@ const Hero = () => {
           Especialistas em Motores e Bombas
         </div>
 
-        {/* Headline otimizada */}
+        {/* Headline */}
         <h1 className="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4">
           Conserto de{' '}
           <span className="text-blue-400">Motores Elétricos</span>
@@ -59,7 +52,7 @@ const Hero = () => {
           <br />em Porto Seguro
         </h1>
 
-        {/* Subheadline mais direta */}
+        {/* Subheadline */}
         <p className="text-white/80 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
           Atendimento rápido, diagnóstico preciso e mais de 28 anos de experiência.
         </p>
@@ -68,10 +61,6 @@ const Hero = () => {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
             href="#agendamento"
-            onClick={(e) => {
-              e.preventDefault();
-              handleScroll('#agendamento');
-            }}
             className="flex items-center justify-center gap-2 text-white font-extrabold px-10 py-4 rounded-full text-base transition-all hover:scale-105 hover:shadow-lg"
             style={{
               background: 'linear-gradient(90deg, #38B6FF 0%, #1E4E8C 60%, #0A2540 100%)',
@@ -109,13 +98,13 @@ const Hero = () => {
       </div>
 
       {/* Scroll */}
-      <button
-        onClick={() => handleScroll('#sobre')}
+      <a
+        href="#sobre"
         className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/60 hover:text-white animate-bounce"
         aria-label="Rolar para baixo"
       >
         <i className="ri-arrow-down-line text-2xl" />
-      </button>
+      </a>
     </section>
   );
 };
