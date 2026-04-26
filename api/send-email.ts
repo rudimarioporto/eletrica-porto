@@ -12,12 +12,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    // 🔹 Aqui você pode integrar com serviço de email depois
-    console.log('📩 Novo agendamento:');
-    console.log({ name, email, phone, service });
+    console.log('📩 Novo agendamento:', { name, email, phone, service });
 
     return res.status(200).json({ success: true });
   } catch (error) {
-    return res.status(500).json({ error: 'Erro ao enviar' });
+    console.error('Erro ao processar:', error);
+    return res.status(500).json({ error: 'Erro interno' });
   }
 }
