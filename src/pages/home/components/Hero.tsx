@@ -1,7 +1,9 @@
 const Hero = () => {
-  const handleScroll = (href: string) => {
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  const handleScroll = (id: string) => {
+    const el = document.getElementById(id.replace('#', ''));
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
 
   return (
@@ -9,68 +11,60 @@ const Hero = () => {
       id="inicio"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background Image — foto real Rudivan */}
+      {/* Background Image (LOCAL + otimizada) */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: "url('https://i.ibb.co/pk5syY1/Rudivan-jpg.png')",
-          backgroundPosition: 'center center',
-          filter: 'brightness(1.08) contrast(1.15) saturate(1.1)',
+          backgroundImage: "url('/images/hero.webp')",
         }}
       />
 
-      {/* Overlay azul escuro #0A2540 com ~50% de transparência */}
+      {/* Overlay */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            'linear-gradient(160deg, rgba(10,37,64,0.62) 0%, rgba(10,37,64,0.48) 50%, rgba(10,37,64,0.65) 100%)',
+            'linear-gradient(160deg, rgba(10,37,64,0.65) 0%, rgba(10,37,64,0.55) 50%, rgba(10,37,64,0.7) 100%)',
         }}
       />
 
       {/* Content */}
       <div className="relative z-10 w-full max-w-5xl mx-auto px-4 md:px-8 text-center">
 
-        {/* Logo real da empresa — alinhada à esquerda */}
-        <div className="flex items-center justify-start mb-8 mt-16">
+        {/* Logo menor */}
+        <div className="flex items-center justify-start mb-6 mt-12">
           <img
-            src="https://public.readdy.ai/ai/img_res/134c6734-485a-4896-accf-bf5582935133.png"
+            src="/images/logo.png"
             alt="Elétrica Porto — Motores e Bombas"
             className="w-auto object-contain"
             style={{
-              height: '210px',
-              maxWidth: '420px',
-              filter: 'drop-shadow(0 0 18px rgba(56,182,255,0.45)) drop-shadow(0 4px 24px rgba(10,37,64,0.6))',
-              opacity: 1,
+              height: '120px',
+              maxWidth: '320px',
             }}
           />
         </div>
 
         {/* Badge */}
-        <div
-          className="inline-flex items-center gap-2 text-xs font-semibold px-4 py-1.5 rounded-full mb-6 tracking-wide uppercase"
-          style={{
-            background: 'rgba(56,182,255,0.18)',
-            border: '1px solid rgba(56,182,255,0.35)',
-            color: '#38B6FF',
-          }}
-        >
+        <div className="inline-flex items-center gap-2 text-xs font-semibold px-4 py-1.5 rounded-full mb-6 tracking-wide uppercase bg-blue-500/20 border border-blue-400/30 text-blue-400">
           <i className="ri-flashlight-fill" />
           Especialistas em Motores e Bombas
         </div>
 
+        {/* Headline otimizada */}
         <h1 className="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4">
-          Especialistas em{' '}
-          <span style={{ color: '#38B6FF' }}>Motores Elétricos</span>
+          Conserto de{' '}
+          <span className="text-blue-400">Motores Elétricos</span>
           <br />e{' '}
-          <span style={{ color: '#38B6FF' }}>Bombas d&apos;Água</span>
+          <span className="text-blue-400">Bombas d&apos;Água</span>
+          <br />em Porto Seguro
         </h1>
 
+        {/* Subheadline mais direta */}
         <p className="text-white/80 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-          Mais de 28 anos oferecendo soluções confiáveis em Porto Seguro e região.
+          Atendimento rápido, diagnóstico preciso e mais de 28 anos de experiência.
         </p>
 
-        {/* CTA Buttons */}
+        {/* CTA */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
             href="#agendamento"
@@ -78,38 +72,35 @@ const Hero = () => {
               e.preventDefault();
               handleScroll('#agendamento');
             }}
-            className="flex items-center justify-center gap-2 text-white font-extrabold px-10 py-4 rounded-full text-base transition-all hover:scale-105 hover:shadow-lg cursor-pointer whitespace-nowrap"
+            className="flex items-center justify-center gap-2 text-white font-extrabold px-10 py-4 rounded-full text-base transition-all hover:scale-105 hover:shadow-lg"
             style={{
               background: 'linear-gradient(90deg, #38B6FF 0%, #1E4E8C 60%, #0A2540 100%)',
-              boxShadow: '0 4px 24px rgba(56,182,255,0.35)',
             }}
           >
             <i className="ri-calendar-check-line text-lg" />
-            Agendar Atendimento
+            Solicitar Atendimento Agora
           </a>
+
           <a
-            href="https://wa.me/5573999933162?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20El%C3%A9trica%20Porto.%20Gostaria%20de%20falar%20com%20um%20especialista."
+            href="https://wa.me/5573999933162?text=Olá,%20vim%20pelo%20site%20e%20quero%20atendimento%20rápido."
             target="_blank"
             rel="nofollow noreferrer"
-            className="flex items-center justify-center gap-2 bg-white text-[#0A2540] font-extrabold px-10 py-4 rounded-full text-base transition-all hover:scale-105 cursor-pointer whitespace-nowrap"
-            style={{ boxShadow: '0 4px 20px rgba(255,255,255,0.25)' }}
+            className="flex items-center justify-center gap-2 bg-white text-[#0A2540] font-extrabold px-10 py-4 rounded-full text-base transition-all hover:scale-105"
           >
             <i className="ri-whatsapp-line text-lg text-green-500" />
-            Falar no WhatsApp
+            Atendimento imediato no WhatsApp
           </a>
         </div>
 
         {/* Stats */}
-        <div className="mt-16 grid grid-cols-3 gap-4 md:gap-8 max-w-xl mx-auto">
+        <div className="mt-14 grid grid-cols-3 gap-4 md:gap-8 max-w-xl mx-auto">
           {[
             { icon: 'ri-trophy-line', value: '+28 anos', label: 'de experiência' },
             { icon: 'ri-user-smile-line', value: '+3.000', label: 'clientes atendidos' },
             { icon: 'ri-tools-line', value: '100%', label: 'de satisfação' },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
-              <div className="w-10 h-10 flex items-center justify-center mx-auto mb-1">
-                <i className={`${stat.icon} text-2xl`} style={{ color: '#38B6FF' }} />
-              </div>
+              <i className={`${stat.icon} text-2xl text-blue-400 mb-1`} />
               <div className="text-white font-bold text-xl md:text-2xl">{stat.value}</div>
               <div className="text-white/60 text-xs">{stat.label}</div>
             </div>
@@ -117,10 +108,10 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll */}
       <button
         onClick={() => handleScroll('#sobre')}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/60 hover:text-white cursor-pointer animate-bounce transition-colors"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/60 hover:text-white animate-bounce"
         aria-label="Rolar para baixo"
       >
         <i className="ri-arrow-down-line text-2xl" />
