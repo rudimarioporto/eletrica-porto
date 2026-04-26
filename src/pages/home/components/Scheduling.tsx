@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 const Scheduling = () => {
   const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -14,33 +13,31 @@ const Scheduling = () => {
   });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
+    e.preventDefault();
+    setLoading(true);
 
-  setLoading(true);
+    const msg = encodeURIComponent(
+      `Olá, gostaria de agendar um atendimento${
+        form.service ? ` para ${form.service}` : ""
+      }${form.date ? ` no dia ${form.date}` : ""}${
+        form.time ? ` às ${form.time}` : ""
+      }. Meu nome é ${form.name}.`
+    );
 
-  const msg = encodeURIComponent(
-    `Olá, gostaria de agendar um atendimento${
-      form.service ? ` para ${form.service}` : ""
-    }${form.date ? ` no dia ${form.date}` : ""}${
-      form.time ? ` às ${form.time}` : ""
-    }. Meu nome é ${form.name}.`
-  );
+    // abre WhatsApp
+    window.open(`https://wa.me/5573999933162?text=${msg}`, "_blank");
 
-  // abre WhatsApp
-  window.open(`https://wa.me/5573999933162?text=${msg}`, "_blank");
+    // redireciona
+    const params = new URLSearchParams({
+      name: form.name || "",
+      service: form.service || "",
+      date: form.date || "",
+      time: form.time || "",
+    });
 
-  // redireciona
-  const params = new URLSearchParams({
-    name: form.name || "",
-    service: form.service || "",
-    date: form.date || "",
-    time: form.time || "",
-  });
+    navigate(`/agradecimento?${params.toString()}`);
 
-  navigate(`/agradecimento?${params.toString()}`);
-
-  setLoading(false);
-};
+    setLoading(false);
   };
 
   return (
@@ -49,8 +46,10 @@ const Scheduling = () => {
         Agendar Atendimento
       </h2>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-md mx-auto">
-
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-4 max-w-md mx-auto"
+      >
         <input
           type="text"
           placeholder="Seu nome"
@@ -89,7 +88,6 @@ const Scheduling = () => {
         >
           {loading ? "Enviando..." : "Enviar Solicitação"}
         </button>
-
       </form>
     </section>
   );
