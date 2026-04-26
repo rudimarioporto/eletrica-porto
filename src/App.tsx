@@ -1,16 +1,98 @@
-import { BrowserRouter } from "react-router-dom";
-import { AppRoutes } from "./router";
-import { I18nextProvider } from "react-i18next";
-import i18n from "./i18n";
+import { FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function App() {
+const Scheduling = () => {
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const [form, setForm] = useState({
+    name: "",
+    service: "",
+    date: "",
+    time: "",
+  });
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    setLoading(true);
+
+    const msg = encodeURIComponent(
+      `Olá, gostaria de agendar um atendimento${
+        form.service ? ` para ${form.service}` : ""
+      }${form.date ? ` no dia ${form.date}` : ""}${
+        form.time ? ` às ${form.time}` : ""
+      }. Meu nome é ${form.name}.`
+    );
+
+    // Redireciona direto para WhatsApp (mais confiável)
+    window.location.href = `https://wa.me/5573999933162?text=${msg}`;
+
+    // Opcional: remover navigate se quiser evitar conflito
+    // navigate(`/agradecimento?${params.toString()}`);
+
+    setLoading(false);
+  };
+
   return (
-    <I18nextProvider i18n={i18n}>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
-    </I18nextProvider>
-  );
-}
+    <section id="agendamento" className="p-10 bg-white text-center">
+      <h2 className="text-2xl font-bold mb-4">
+        Agendar Atendimento
+      </h2>
 
-export default App;
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-4 max-w-md mx-auto"
+      >
+        <input
+          type="text"
+          placeholder="Seu nome"
+          required
+          value={form.name}
+          onChange={(e) =>
+            setForm({ ...form, name: e.target.value })
+          }
+          className="border p-3 rounded"
+        />
+
+        <input
+          type="text"
+          placeholder="Serviço"
+          value={form.service}
+          onChange={(e) =>
+            setForm({ ...form, service: e.target.value })
+          }
+          className="border p-3 rounded"
+        />
+
+        <input
+          type="date"
+          value={form.date}
+          onChange={(e) =>
+            setForm({ ...form, date: e.target.value })
+          }
+          className="border p-3 rounded"
+        />
+
+        <input
+          type="time"
+          value={form.time}
+          onChange={(e) =>
+            setForm({ ...form, time: e.target.value })
+          }
+          className="border p-3 rounded"
+        />
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="bg-blue-500 text-white p-3 rounded"
+        >
+          {loading ? "Enviando..." : "Enviar Solicitação"}
+        </button>
+      </form>
+    </section>
+  );
+};
+
+export default Scheduling;
