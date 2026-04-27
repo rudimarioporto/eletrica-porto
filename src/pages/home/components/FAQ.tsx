@@ -127,16 +127,13 @@ const FAQ = () => {
               Falar pelo WhatsApp
             </a>
             <a
-              href="#agendamento"
-              onClick={(e) => { e.preventDefault(); document.querySelector('#agendamento')?.scrollIntoView({ behavior: 'smooth' }); }}
-              className="inline-flex items-center justify-center gap-2 font-bold px-7 py-3.5 rounded-full text-sm transition-all cursor-pointer whitespace-nowrap border-2"
-              style={{ borderColor: '#1E4E8C', color: '#1E4E8C' }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = '#1E4E8C'; e.currentTarget.style.color = 'white'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#1E4E8C'; }}
-            >
-              <i className="ri-calendar-check-line text-base"></i>
-              Agendar Atendimento
-            </a>
+  href="#agendamento"
+  className="inline-flex items-center justify-center gap-2 font-bold px-7 py-3.5 rounded-full text-sm transition-all cursor-pointer whitespace-nowrap border-2"
+  style={{ borderColor: '#1E4E8C', color: '#1E4E8C' }}
+>
+  <i className="ri-calendar-check-line text-base"></i>
+  Agendar Atendimento
+</a>
           </div>
         </div>
       </div>

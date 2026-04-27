@@ -17,17 +17,17 @@ const Scheduling = () => {
     setLoading(true);
 
     const msg = encodeURIComponent(
-      `Olá, gostaria de agendar um atendimento${
-        form.service ? ` para ${form.service}` : ""
-      }${form.date ? ` no dia ${form.date}` : ""}${
-        form.time ? ` às ${form.time}` : ""
-      }. Meu nome é ${form.name}.`
+      "Ola, gostaria de agendar um atendimento" +
+      (form.service ? " para " + form.service : "") +
+      (form.date ? " no dia " + form.date : "") +
+      (form.time ? " as " + form.time : "") +
+      ". Meu nome e " + form.name + "."
     );
 
-    // abre WhatsApp
+    // abrir WhatsApp
     window.open(`https://wa.me/5573999933162?text=${msg}`, "_blank");
 
-    // redireciona
+    // criar params corretamente
     const params = new URLSearchParams({
       name: form.name || "",
       service: form.service || "",
@@ -35,7 +35,10 @@ const Scheduling = () => {
       time: form.time || "",
     });
 
-    navigate(`/agradecimento?${params.toString()}`);
+    // redirecionar depois de 1s
+    setTimeout(() => {
+      navigate(`/agradecimento?${params.toString()}`);
+    }, 1000);
 
     setLoading(false);
   };
@@ -55,7 +58,9 @@ const Scheduling = () => {
           placeholder="Seu nome"
           required
           value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          onChange={(e) =>
+            setForm({ ...form, name: e.target.value })
+          }
           className="border p-3 rounded"
         />
 
@@ -63,21 +68,27 @@ const Scheduling = () => {
           type="text"
           placeholder="Serviço"
           value={form.service}
-          onChange={(e) => setForm({ ...form, service: e.target.value })}
+          onChange={(e) =>
+            setForm({ ...form, service: e.target.value })
+          }
           className="border p-3 rounded"
         />
 
         <input
           type="date"
           value={form.date}
-          onChange={(e) => setForm({ ...form, date: e.target.value })}
+          onChange={(e) =>
+            setForm({ ...form, date: e.target.value })
+          }
           className="border p-3 rounded"
         />
 
         <input
           type="time"
           value={form.time}
-          onChange={(e) => setForm({ ...form, time: e.target.value })}
+          onChange={(e) =>
+            setForm({ ...form, time: e.target.value })
+          }
           className="border p-3 rounded"
         />
 
