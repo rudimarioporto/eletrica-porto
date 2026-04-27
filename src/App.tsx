@@ -15,23 +15,35 @@ const Scheduling = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (loading) return; // evita clique duplo
+
     setLoading(true);
 
     const msg = encodeURIComponent(
-      `Olá, gostaria de agendar um atendimento${
-        form.service ? ` para ${form.service}` : ""
-      }${form.date ? ` no dia ${form.date}` : ""}${
-        form.time ? ` às ${form.time}` : ""
-      }. Meu nome é ${form.name}.`
+      "Ola, gostaria de agendar um atendimento" +
+        (form.service ? " para " + form.service : "") +
+        (form.date ? " no dia " + form.date : "") +
+        (form.time ? " as " + form.time : "") +
+        ". Meu nome e " +
+        form.name +
+        "."
     );
 
-    // Redireciona direto para WhatsApp (mais confiável)
-    window.location.href = `https://wa.me/5573999933162?text=${msg}`;
+    // abre WhatsApp em nova aba
+    window.open(`https://wa.me/5573999933162?text=${msg}`, "_blank");
 
-    // Opcional: remover navigate se quiser evitar conflito
-    // navigate(`/agradecimento?${params.toString()}`);
+    // monta parâmetros para página de agradecimento
+    const params = new URLSearchParams({
+      name: form.name || "",
+      service: form.service || "",
+      date: form.date || "",
+      time: form.time || "",
+    });
 
-    setLoading(false);
+    // espera 1s e redireciona
+    setTimeout(() => {
+      navigate(`/agradecimento?${params.toString()}`);
+    }, 1000);
   };
 
   return (
