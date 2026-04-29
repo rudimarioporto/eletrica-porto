@@ -1,130 +1,14 @@
-import { FormEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRoutes } from "react-router-dom";
+import routes from "./routes";
 
-const Scheduling = () => {
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+function App() {
+  const element = useRoutes(routes);
 
-  const [form, setForm] = useState({
-    name: "",
-    service: "",
-    date: "",
-    time: "",
-  });
+  if (!element) {
+    return <div>Carregando...</div>;
+  }
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  return element;
+}
 
-    if (loading) return;
-
-    setLoading(true);
-
-    try {
-      const msg = encodeURIComponent(
-        "Ola, gostaria de agendar um atendimento" +
-          (form.service ? " para " + form.service : "") +
-          (form.date ? " no dia " + form.date : "") +
-          (form.time ? " as " + form.time : "") +
-          ". Meu nome e " +
-          form.name +
-          "."
-      );
-
-      // abre WhatsApp
-      window.open(`https://wa.me/5573999933162?text=${msg}`, "_blank");
-
-      // parâmetros para página de agradecimento
-      const params = new URLSearchParams({
-        name: form.name,
-        service: form.service,
-        date: form.date,
-        time: form.time,
-      });
-
-      // limpa formulário
-      setForm({
-        name: "",
-        service: "",
-        date: "",
-        time: "",
-      });
-
-      // redireciona
-      setTimeout(() => {
-        navigate(`/agradecimento?${params.toString()}`);
-      }, 1000);
-
-    } catch (error) {
-      console.error("Erro ao enviar:", error);
-      alert("Erro ao enviar. Tente novamente.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <section id="agendamento" className="p-10 bg-white text-center">
-      <h2 className="text-2xl font-bold mb-4">
-        Agendar Atendimento
-      </h2>
-
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-4 max-w-md mx-auto"
-      >
-        <input
-          type="text"
-          name="name"
-          placeholder="Seu nome"
-          required
-          value={form.name}
-          onChange={(e) =>
-            setForm({ ...form, name: e.target.value })
-          }
-          className="border p-3 rounded"
-        />
-
-        <input
-          type="text"
-          name="service"
-          placeholder="Serviço"
-          value={form.service}
-          onChange={(e) =>
-            setForm({ ...form, service: e.target.value })
-          }
-          className="border p-3 rounded"
-        />
-
-        <input
-          type="date"
-          name="date"
-          value={form.date}
-          onChange={(e) =>
-            setForm({ ...form, date: e.target.value })
-          }
-          className="border p-3 rounded"
-        />
-
-        <input
-          type="time"
-          name="time"
-          value={form.time}
-          onChange={(e) =>
-            setForm({ ...form, time: e.target.value })
-          }
-          className="border p-3 rounded"
-        />
-
-        <button
-          type="submit"
-          disabled={loading}
-          className="bg-blue-500 text-white p-3 rounded"
-        >
-          {loading ? "Enviando..." : "Enviar Solicitação"}
-        </button>
-      </form>
-    </section>
-  );
-};
-
-export default Scheduling;
+export default App;
