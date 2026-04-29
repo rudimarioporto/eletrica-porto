@@ -13,40 +13,53 @@ const Scheduling = () => {
   });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-  setLoading(true);
+    e.preventDefault();
 
-  try {
-    const msg = encodeURIComponent(
-      "Ola, gostaria de agendar um atendimento" +
-        (form.service ? " para " + form.service : "") +
-        (form.date ? " no dia " + form.date : "") +
-        (form.time ? " as " + form.time : "") +
-        ". Meu nome e " + form.name + "."
-    );
+    if (loading) return;
 
-    // abrir WhatsApp
-    const whatsappUrl = `https://wa.me/5573999933162?text=${msg}`;
-    window.open(whatsappUrl, "_blank");
+    if (!form.name.trim()) {
+      alert("Digite seu nome");
+      return;
+    }
 
-    // params
-    const params = new URLSearchParams({
-      name: form.name || "",
-      service: form.service || "",
-      date: form.date || "",
-      time: form.time || "",
-    });
+    setLoading(true);
 
-    // redirecionar
-    setTimeout(() => {
-      navigate(`/agradecimento?${params.toString()}`);
-    }, 1000);
-  } catch (error) {
-    console.error("Erro no envio:", error);
-  } finally {
-    setLoading(false);
-  }
-};
+    try {
+      const msg = encodeURIComponent(
+        "Ola, gostaria de agendar um atendimento" +
+          (form.service ? " para " + form.service : "") +
+          (form.date ? " no dia " + form.date : "") +
+          (form.time ? " as " + form.time : "") +
+          ". Meu nome e " +
+          form.name +
+          "."
+      );
+
+      const url = `https://wa.me/5573999933162?text=${msg}`;
+
+      // ✅ MAIS CONFIÁVEL (evita bloqueio de popup)
+      window.location.href = url;
+
+      // redireciona depois (caso o usuário volte)
+      setTimeout(() => {
+        navigate("/agradecimento");
+      }, 2000);
+
+      // limpa formulário
+      setForm({
+        name: "",
+        service: "",
+        date: "",
+        time: "",
+      });
+
+    } catch (error) {
+      console.error("Erro ao enviar:", error);
+      alert("Erro ao enviar. Tente novamente.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <section id="agendamento" className="p-10 bg-white text-center">
@@ -59,6 +72,7 @@ const Scheduling = () => {
         className="flex flex-col gap-4 max-w-md mx-auto"
       >
         <input
+          name="name"
           type="text"
           placeholder="Seu nome"
           required
@@ -70,6 +84,7 @@ const Scheduling = () => {
         />
 
         <input
+          name="service"
           type="text"
           placeholder="Serviço"
           value={form.service}
@@ -80,6 +95,7 @@ const Scheduling = () => {
         />
 
         <input
+          name="date"
           type="date"
           value={form.date}
           onChange={(e) =>
@@ -89,6 +105,7 @@ const Scheduling = () => {
         />
 
         <input
+          name="time"
           type="time"
           value={form.time}
           onChange={(e) =>
