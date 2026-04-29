@@ -3,98 +3,123 @@ import { Link } from "react-router-dom";
 const Home = () => {
   return (
     <div style={{ fontFamily: "Inter, sans-serif" }}>
+      
+      {/* NAVBAR */}
+      <header
+        style={{
+          position: "absolute",
+          top: 0,
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-between",
+          padding: "20px 40px",
+          color: "white",
+          zIndex: 10,
+        }}
+      >
+        <div style={{ fontWeight: "bold" }}>Elétrica Porto</div>
 
-      {/* HERO */}
-      <section style={{
-        backgroundImage: "url('https://images.unsplash.com/photo-1581090700227-4c4f50b5b3c1')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        color: "white",
-        padding: "100px 20px",
-        textAlign: "center"
-      }}>
-        <h1 style={{ fontSize: "36px", fontWeight: "700" }}>
-          Eletricista em Porto Seguro
-        </h1>
-
-        <p style={{ maxWidth: "600px", margin: "20px auto" }}>
-          Instalação, manutenção elétrica, conserto de motores e bombas.
-          Atendimento rápido e profissional.
-        </p>
+        <nav style={{ display: "flex", gap: "20px" }}>
+          <a href="#">Início</a>
+          <a href="#">Sobre</a>
+          <a href="#">Serviços</a>
+          <a href="#">Contato</a>
+        </nav>
 
         <Link to="/agendamento">
-          <button style={{
-            background: "#38B6FF",
-            padding: "15px 25px",
-            border: "none",
-            borderRadius: "8px",
-            color: "#fff",
-            fontSize: "16px",
-            cursor: "pointer"
-          }}>
-            Agendar Atendimento
+          <button
+            style={{
+              background: "#38B6FF",
+              border: "none",
+              padding: "10px 15px",
+              borderRadius: "20px",
+              color: "#fff",
+              cursor: "pointer",
+            }}
+          >
+            Agendar
           </button>
         </Link>
-      </section>
+      </header>
 
-      {/* SERVIÇOS */}
-      <section style={{ padding: "60px 20px", textAlign: "center" }}>
-        <h2 style={{ fontSize: "28px" }}>Nossos Serviços</h2>
+      {/* HERO */}
+      <section
+        style={{
+          height: "100vh",
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1581090700227-4c4f50b5b3c1')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          position: "relative",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          textAlign: "center",
+          color: "white",
+        }}
+      >
+        {/* overlay escuro */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "rgba(0,0,0,0.6)",
+          }}
+        />
 
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-          gap: "20px",
-          marginTop: "30px"
-        }}>
-          <div>⚡ Instalação elétrica</div>
-          <div>🔧 Manutenção elétrica</div>
-          <div>🚿 Troca de chuveiro</div>
-          <div>💡 Curto circuito</div>
-          <div>🔌 Tomadas e fiação</div>
-          <div>🔩 Bombas d’água</div>
+        <div style={{ position: "relative", zIndex: 2 }}>
+          <h1 style={{ fontSize: "40px", fontWeight: "800" }}>
+            Especialistas em{" "}
+            <span style={{ color: "#38B6FF" }}>
+              Motores Elétricos
+            </span>{" "}
+            <br /> e Bombas d'Água
+          </h1>
+
+          <p style={{ marginTop: "20px" }}>
+            Mais de 28 anos oferecendo soluções confiáveis em Porto
+            Seguro e região.
+          </p>
+
+          <div style={{ marginTop: "30px", display: "flex", gap: "20px", justifyContent: "center" }}>
+            
+            <Link to="/agendamento">
+              <button
+                style={{
+                  background: "#38B6FF",
+                  padding: "15px 25px",
+                  border: "none",
+                  borderRadius: "30px",
+                  color: "#fff",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                }}
+              >
+                Agendar Atendimento
+              </button>
+            </Link>
+
+            <a href="https://wa.me/5573999933162" target="_blank">
+              <button
+                style={{
+                  background: "#fff",
+                  padding: "15px 25px",
+                  border: "none",
+                  borderRadius: "30px",
+                  color: "#000",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                }}
+              >
+                Falar no WhatsApp
+              </button>
+            </a>
+
+          </div>
         </div>
       </section>
 
-      {/* SOBRE */}
-      <section style={{
-        background: "#f5f5f5",
-        padding: "60px 20px",
-        textAlign: "center"
-      }}>
-        <h2>Sobre a Elétrica Porto</h2>
-
-        <p style={{ maxWidth: "600px", margin: "20px auto" }}>
-          Profissional especializado em serviços elétricos em Porto Seguro,
-          com atendimento rápido, segurança e qualidade garantida.
-        </p>
-      </section>
-
-      {/* CTA FINAL */}
-      <section style={{
-        background: "#0A2540",
-        color: "white",
-        padding: "60px 20px",
-        textAlign: "center"
-      }}>
-        <h2>Precisa de um eletricista agora?</h2>
-
-        <Link to="/agendamento">
-          <button style={{
-            marginTop: "20px",
-            padding: "15px 25px",
-            background: "#25D366",
-            border: "none",
-            borderRadius: "8px",
-            color: "#fff",
-            fontSize: "16px"
-          }}>
-            Agendar via WhatsApp
-          </button>
-        </Link>
-      </section>
-
-      {/* WHATSAPP FIXO */}
+      {/* WHATSAPP FLUTUANTE */}
       <a
         href="https://wa.me/5573999933162"
         target="_blank"
@@ -106,8 +131,8 @@ const Home = () => {
           color: "#fff",
           padding: "15px",
           borderRadius: "50%",
-          fontSize: "22px",
-          textDecoration: "none"
+          fontSize: "20px",
+          textDecoration: "none",
         }}
       >
         💬
