@@ -1,13 +1,15 @@
-import Scheduling from "./components/Scheduling";
-
 const Home = () => {
   return (
-    <main>
-      <h1 style={{ textAlign: "center", marginTop: "40px" }}>
-        Elétrica Porto
-      </h1>
+    <main style={{ textAlign: "center", marginTop: "40px" }}>
+      <h1>Elétrica Porto</h1>
 
-      <Scheduling />
+      <p>Bem-vindo ao nosso site</p>
+
+      <a href="/agendamento">
+        <button style={{ marginTop: "20px" }}>
+          Agendar Atendimento
+        </button>
+      </a>
     </main>
   );
 };
