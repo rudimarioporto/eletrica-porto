@@ -1,12 +1,14 @@
-import FAQ from "./components/FAQ";
 import Scheduling from "./components/Scheduling";
 
 const Home = () => {
   return (
-    <>
-      <FAQ />
+    <main>
+      <h1 style={{ textAlign: "center", marginTop: "40px" }}>
+        Elétrica Porto
+      </h1>
+
       <Scheduling />
-    </>
+    </main>
   );
 };
 
