@@ -13,21 +13,23 @@ const Scheduling = () => {
   });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
+  e.preventDefault();
+  setLoading(true);
 
+  try {
     const msg = encodeURIComponent(
       "Ola, gostaria de agendar um atendimento" +
-      (form.service ? " para " + form.service : "") +
-      (form.date ? " no dia " + form.date : "") +
-      (form.time ? " as " + form.time : "") +
-      ". Meu nome e " + form.name + "."
+        (form.service ? " para " + form.service : "") +
+        (form.date ? " no dia " + form.date : "") +
+        (form.time ? " as " + form.time : "") +
+        ". Meu nome e " + form.name + "."
     );
 
     // abrir WhatsApp
-    window.open(`https://wa.me/5573999933162?text=${msg}`, "_blank");
+    const whatsappUrl = `https://wa.me/5573999933162?text=${msg}`;
+    window.open(whatsappUrl, "_blank");
 
-    // criar params corretamente
+    // params
     const params = new URLSearchParams({
       name: form.name || "",
       service: form.service || "",
@@ -35,13 +37,16 @@ const Scheduling = () => {
       time: form.time || "",
     });
 
-    // redirecionar depois de 1s
+    // redirecionar
     setTimeout(() => {
       navigate(`/agradecimento?${params.toString()}`);
     }, 1000);
-
+  } catch (error) {
+    console.error("Erro no envio:", error);
+  } finally {
     setLoading(false);
-  };
+  }
+};
 
   return (
     <section id="agendamento" className="p-10 bg-white text-center">

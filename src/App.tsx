@@ -15,35 +15,51 @@ const Scheduling = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (loading) return; // evita clique duplo
+    if (loading) return;
 
     setLoading(true);
 
-    const msg = encodeURIComponent(
-      "Ola, gostaria de agendar um atendimento" +
-        (form.service ? " para " + form.service : "") +
-        (form.date ? " no dia " + form.date : "") +
-        (form.time ? " as " + form.time : "") +
-        ". Meu nome e " +
-        form.name +
-        "."
-    );
+    try {
+      const msg = encodeURIComponent(
+        "Ola, gostaria de agendar um atendimento" +
+          (form.service ? " para " + form.service : "") +
+          (form.date ? " no dia " + form.date : "") +
+          (form.time ? " as " + form.time : "") +
+          ". Meu nome e " +
+          form.name +
+          "."
+      );
 
-    // abre WhatsApp em nova aba
-    window.open(`https://wa.me/5573999933162?text=${msg}`, "_blank");
+      // abre WhatsApp
+      window.open(`https://wa.me/5573999933162?text=${msg}`, "_blank");
 
-    // monta parâmetros para página de agradecimento
-    const params = new URLSearchParams({
-      name: form.name || "",
-      service: form.service || "",
-      date: form.date || "",
-      time: form.time || "",
-    });
+      // parâmetros para página de agradecimento
+      const params = new URLSearchParams({
+        name: form.name,
+        service: form.service,
+        date: form.date,
+        time: form.time,
+      });
 
-    // espera 1s e redireciona
-    setTimeout(() => {
-      navigate(`/agradecimento?${params.toString()}`);
-    }, 1000);
+      // limpa formulário
+      setForm({
+        name: "",
+        service: "",
+        date: "",
+        time: "",
+      });
+
+      // redireciona
+      setTimeout(() => {
+        navigate(`/agradecimento?${params.toString()}`);
+      }, 1000);
+
+    } catch (error) {
+      console.error("Erro ao enviar:", error);
+      alert("Erro ao enviar. Tente novamente.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -58,6 +74,7 @@ const Scheduling = () => {
       >
         <input
           type="text"
+          name="name"
           placeholder="Seu nome"
           required
           value={form.name}
@@ -69,6 +86,7 @@ const Scheduling = () => {
 
         <input
           type="text"
+          name="service"
           placeholder="Serviço"
           value={form.service}
           onChange={(e) =>
@@ -79,6 +97,7 @@ const Scheduling = () => {
 
         <input
           type="date"
+          name="date"
           value={form.date}
           onChange={(e) =>
             setForm({ ...form, date: e.target.value })
@@ -88,6 +107,7 @@ const Scheduling = () => {
 
         <input
           type="time"
+          name="time"
           value={form.time}
           onChange={(e) =>
             setForm({ ...form, time: e.target.value })
