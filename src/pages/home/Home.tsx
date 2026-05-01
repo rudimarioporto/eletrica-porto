@@ -1,5 +1,4 @@
 import LinksGrid from "../../components/LinksGrid";
-
 import { Link } from "react-router-dom";
 
 const Home = () => {
@@ -119,6 +118,11 @@ const Home = () => {
 
           </div>
         </div>
+      </section>
+
+      {/* 🔥 GRID DE LINKS (SEUS ÍCONES VOLTAM AQUI) */}
+      <section style={{ padding: "40px 20px", background: "#f5f5f5" }}>
+        <LinksGrid />
       </section>
 
       {/* WHATSAPP FLUTUANTE */}
