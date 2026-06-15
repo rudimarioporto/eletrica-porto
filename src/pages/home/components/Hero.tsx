@@ -10,14 +10,14 @@ const Hero = () => {
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
       {/* Background Image — foto real Rudivan */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: "url('/rudivan.webp')",
-          backgroundPosition: 'center center',
-          filter: 'brightness(1.08) contrast(1.15) saturate(1.1)',
-        }}
-      />
+      <img
+  src="/rudivan.webp"
+  alt="Rudivan"
+  className="absolute inset-0 w-full h-full object-cover"
+  style={{
+    filter: 'brightness(1.08) contrast(1.15) saturate(1.1)',
+  }}
+/>
 
       {/* Overlay escuro base — garante contraste do texto */}
       <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.50)' }} />
